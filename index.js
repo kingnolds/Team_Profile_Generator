@@ -3,6 +3,9 @@ const Employee = require("./lib/Employee");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
+const generate = require("./util/generateHtml");
+const fs = require('fs');
+
 
 let teamMembers = []
 
@@ -79,6 +82,10 @@ const employeeQuestions = [
 //     };
 //   }
 
+function writeToFile(fileName, data) {
+    fs.writeFileSync(`/teampage/${fileName}.html`, generate(data), (err) => err ? console.error(err) : console.log('Input Logged'))
+}
+
 const startUp = async () => {
     let newMember
     console.log("Enter The Team Manager's Information")
@@ -107,6 +114,9 @@ const startUp = async () => {
                     break;
                 case 'No more Team Members':
                         // TODO: create html here
+                    const firName = teamLead.name.split(' ')[0]
+                    writeToFile(`team${firName}`, teamMembers)
+                    console.log(firName)
                     break;
                 default: 
                     throw new Error('something broke')
