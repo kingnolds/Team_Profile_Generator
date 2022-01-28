@@ -19,9 +19,6 @@ const validateNum = (input) => {
     }
     
 }
-// console.log(validateInput('a'))
-console.log(validateNum(1))
-console.log(typeof(0))
 
 const questions1 = [
     {
@@ -48,12 +45,6 @@ const questions1 = [
         name: 'office',
         validate: validateNum
     },
-    // {
-    //     type: 'list',
-    //     message: "Add Another Employee",
-    //     name: 'role',
-    //     choices: ['Engineer', 'Intern', 'No more Team Members']
-    // }
 ]
 const employeeQuestions = [
     {
@@ -99,12 +90,6 @@ const employeeQuestions = [
     },
 ]
 
-// function isRole(aRole) {
-//     return function (answers) {
-//       return answers[aRole];
-//     };
-//   }
-
 function writeToFile(fileName, data) {
     try {
         fs.writeFileSync(path.join(__dirname,"dist",`${fileName}.html`), generate(data));
@@ -112,7 +97,6 @@ function writeToFile(fileName, data) {
         // An error occurred
         console.error(err);
       }
-    // fs.writeFileSync(`/teampage/${fileName}.html`, generate(data), (err) => err ? console.error(err) : console.log('Input Logged'))
 }
 
 const startUp = async () => {
@@ -123,7 +107,6 @@ const startUp = async () => {
     const { manager, managerID, managerEmail, office } = ans1
     const teamLead = new Manager(manager, managerID, managerEmail, office)
     teamMembers.push(teamLead)
-    console.log(teamLead)
     const addMember = async () =>{
         const ans2 = await inquirer.prompt(employeeQuestions)
         const { role, employeeName, employeeID, employeeEmail, github, school} = ans2
@@ -131,23 +114,17 @@ const startUp = async () => {
                 case 'Engineer':
                     newMember = new Engineer(employeeName, employeeID, employeeEmail, github)
                     teamMembers.push(newMember)
-                    console.log(newMember)
-                    console.log(teamMembers)
                     addMember()
                     break;
                 case 'Intern':
                     newMember = new Intern(employeeName, employeeID, employeeEmail, school)
                     teamMembers.push(newMember)
-                    console.log(newMember)
-                    console.log(teamMembers)
                     addMember()
                     break;
                 case 'No more Team Members':
-                        // TODO: create html here
                     const firName = teamLead.name.split(' ')[0]
                     writeToFile(`team${firName}`, teamMembers)
                     console.log('Your team page is ready in the dist directory!')
-                    console.log(firName)
                     break;
                 default: 
                     throw new Error('something broke')
